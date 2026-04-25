@@ -1,53 +1,30 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
+Project : LCD_I2C <br>
+Author : Cory W. Hodge <br>
+Date : 4/25/2026 <br>
+URL : [GitHub: coryhodge21](https://github.com/coryhodge21/LCD_I2C) <br>
 
-# Hello World Example
+# LCD_I2C
+&emsp; This project is intended for the ESP32 Component Registery. It's an API/Driver for standard 16x2 LCD displays built upon HD44780U (LCD-II) IC paired with a standard PCF8574 i2c to 8-bit I/O Expander. This component is built upon the latest (as of Date) ESP32 ESP-IDF i2c driver ("driver/i2c_master").
 
-Starts a FreeRTOS task to print "Hello World".
+### Quick Start
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+1. Create an LCD structure : LCD_I2C_Create()
+2. Initialize the LCD Structure : lcd_init()
+3. Send Commands/Data 
+    - Direct byte by byte write : lcd_send_cmd() / lcd_send_data()
+    - Simplified API for sending strings to display : lcd_print()
+4. Utilize remaining API's for easy manipulation of display
 
-## How to use example
+### Developer Notes
 
-Follow detailed instructions provided specifically for this example.
+- If you have issues with an LCD display, check your specific LCD's datasheet for the initialization sequence. This driver uses the sequence [0x30, 0x30, 0x30, 0x20] putting the lcd in 4-bit mode before any other operations are performed.
+- The character creation feature provides 8 memory banks for custom characters (addressed as 0-7)
+- This can be modified to support 16x4 lcd displays
 
-Select the instructions depending on Espressif chip installed on your development board:
+## Resources
+[ESP-IDF I2C api-reference](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/i2c.html) <br>
 
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
+[HITACHI HD44780U LCD Data Sheet](https://circuitdigest.com/sites/default/files/HD44780U.pdf) <br> 
 
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
-```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
-```
-
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
-
-## Troubleshooting
-
-* Program upload failure
-
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
-
-## Technical support and feedback
-
-Please use the following feedback channels:
-
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
-
-We will get back to you as soon as possible.
+[TI PCF8574 Remote 8-Bit I/O Expander for I2C Bus](https://www.ti.com/lit/ds/symlink/pcf8574.pdf?ts=1777143071436&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FPCF8574%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dasc-null-null-GPN_EN-cpc-pf-google-ww_en_cons%2526utm_content%253DPCF8574%2526ds_k%253DPCF8574+Datasheet%2526DCM%253Dyes%2526gclsrc%253Daw.ds%2526gad_source%253D1%2526gad_campaignid%253D14388345080%2526gbraid%253D0AAAAAC068F0A4JlmWW3e-NX2qvFVCcZmm%2526gclid%253DCjwKCAjwg_nNBhAGEiwAiYPYA64ptTIfq_yJO3B1yX0jM_gFpHxiUGj-lfMgPbXX6abuBxpCi43hvxoCrQ8QAvD_BwE)
+[]()
