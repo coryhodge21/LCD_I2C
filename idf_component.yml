@@ -1,0 +1,14 @@
+version: "1.0.0"
+description: "LCD_I2C component for ESP-IDF"
+maintainers: 
+  - "Cory Hodge <coryhodge21@yahoo.com>"
+license: "MIT"
+repository: "https://github.com/coryhodge21/LCD_I2C"
+dependencies:
+  espressif/driver: ">=5.0.0"  # for updated i2c driver
+  idf: ">=5.4"
+
+build:
+  type: "component"
+  src_dir: "./main/"
+  include_dirs: ["LCD_I2C/lcd_i2c.h"]
