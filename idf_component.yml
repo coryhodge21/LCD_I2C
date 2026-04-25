@@ -6,8 +6,8 @@ license: "MIT"
 url: "https://github.com/coryhodge21/LCD_I2C"
 repository: "https://github.com/coryhodge21/LCD_I2C"
 dependencies:
-  espressif/driver: ">=5.0.0"  # for updated i2c driver
   idf: ">=5.4"
+  espressif/driver: ">=5.0.0"  # for updated i2c driver
 
 build:
   type: "component"
