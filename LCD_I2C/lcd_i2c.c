@@ -127,7 +127,6 @@ const uint8_t music_note[8] =
     0b00000
 };
 
-
 /*  -- PRIVATE FUNCTION DEFINITIONS -- */
 
 /**
@@ -141,7 +140,7 @@ const uint8_t music_note[8] =
 static void lcd_write_nibble(LCD_I2C * lcd, uint8_t nibble, uint8_t mode) 
 {
     // Mask upper nibble OR with Backlight Bit OR with mode (data/cmd)
-    uint8_t data = (nibble & EXPANDER_LCD_DATA_BIT_MASKS)  | mode | LCD_I2C_EXPANDER_REG_BACKLIGHT;
+    uint8_t data = (nibble & LCD_I2C_EXPANDER_DATA_BIT_MASK)  | mode | LCD_I2C_EXPANDER_REG_BACKLIGHT;
     
     // Send data with Enable HIGH
     uint8_t byte_on = data | LCD_I2C_EXPANDER_REG_ENABLE;
@@ -267,10 +266,10 @@ void lcd_send_cmd(LCD_I2C * lcd, uint8_t cmd)
 {
 
     // Prepare High Nibble: Move bits 4-7 of data to bits 4-7 of the I2C byte
-    lcd_write_nibble(lcd, cmd & EXPANDER_LCD_DATA_BIT_MASKS, 0);       
+    lcd_write_nibble(lcd, cmd & LCD_I2C_EXPANDER_DATA_BIT_MASK, 0);       
 
     // Prepare Low Nibble: Move bits 0-3 of data to bits 4-7 of the I2C byte
-    lcd_write_nibble(lcd, (cmd << NIBBLE_SIZE) & EXPANDER_LCD_DATA_BIT_MASKS, 0); 
+    lcd_write_nibble(lcd, (cmd << NIBBLE_SIZE) & LCD_I2C_EXPANDER_DATA_BIT_MASK, 0); 
 }
 
 /**
@@ -281,12 +280,11 @@ void lcd_send_cmd(LCD_I2C * lcd, uint8_t cmd)
  */
 void lcd_send_data(LCD_I2C * lcd, uint8_t data)
 {
-
     // Prepare High Nibble: Move bits 4-7 of data to bits 4-7 of the I2C byte
-    lcd_write_nibble(lcd, (data & EXPANDER_LCD_DATA_BIT_MASKS), LCD_I2C_EXPANDER_REG_REGSEL);
+    lcd_write_nibble(lcd, (data & LCD_I2C_EXPANDER_DATA_BIT_MASK), LCD_I2C_EXPANDER_REG_REGSEL);
 
     // Prepare Low Nibble: Move bits 0-3 of data to bits 4-7 of the I2C byte
-    lcd_write_nibble(lcd, ((data << NIBBLE_SIZE) & EXPANDER_LCD_DATA_BIT_MASKS), LCD_I2C_EXPANDER_REG_REGSEL);
+    lcd_write_nibble(lcd, ((data << NIBBLE_SIZE) & LCD_I2C_EXPANDER_DATA_BIT_MASK), LCD_I2C_EXPANDER_REG_REGSEL);
 }
 
 /**

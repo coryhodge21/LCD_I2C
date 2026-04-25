@@ -16,7 +16,7 @@
 /*  -- DEFINES -- */
 
 /**
- * Device Address : 0x27
+ * Device Address : Most common addresses for the I2C LCD Expander are 0x20,0x27,and 0x3F
  */
 #define LCD_ADDR 0x27               // I2C address of the LCD
 
@@ -34,7 +34,7 @@
 /** 
  * Bit Mask for upper Nibble (D4-D7) connected to P4-P7 of the I2C expander
  */
-#define EXPANDER_LCD_DATA_BIT_MASKS 0xF0
+#define LCD_I2C_EXPANDER_DATA_BIT_MASK 0xF0
 
 /**
  * The size of a nibble in bits
