@@ -5,32 +5,42 @@
  * @brief: Example C11 code demonstrating basic syntax and features.
  */
 
-  // for FreeRTOS library
+// for FreeRTOS library
 #include "freertos/FreeRTOS.h"
 
 // for i2c driver
 #include "driver/i2c_master.h"
 
-// use I2C port 0
-#define I2C_PORT I2C_NUM_0
+// for ESP_ERROR_CHECK() and esp_rom_delay_us()
+#include <esp_err.h>
 
-void main(int argc, char *argv[]) {
+// for LCD_I2C library
+#include "LCD_I2C.h"
+
+
+void app_main(int argc, char *argv[]) {
+
+    // Master Bus Handle
+    i2c_master_bus_handle_t bus_handle = NULL;
+    
+    // LCD Device Handle ( device to be added to the master bus)
+    i2c_master_dev_handle_t lcd_handle = NULL;
 
    /* -- Set up the I2C Bus -- */
 
    // Master Bus Configurations
    i2c_master_bus_config_t i2c_mst_config = 
    {
-       .clk_source = clk_source,
-       .i2c_port = i2c_port,
-       .scl_io_num = scl_io_num,
-       .sda_io_num = sda_io_num,
+       .clk_source = I2C_CLK_SRC_DEFAULT,
+       .i2c_port = I2C_NUM_0,
+       .scl_io_num = GPIO_NUM_22,
+       .sda_io_num = GPIO_NUM_21,
        .glitch_ignore_cnt = 7,
-       .flags.enable_internal_pullup = enable_pullup,
+       .flags.enable_internal_pullup = true,
    };
 
    // Install Master Bus
-   ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, bus_handle));
+   ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &bus_handle));
 
    /* -- Add LCD Display to the I2C Bus -- */
 
@@ -38,12 +48,12 @@ void main(int argc, char *argv[]) {
     i2c_device_config_t dev_cfg = 
     {
         .dev_addr_length = I2C_ADDR_BIT_LEN_7,
-        .device_address = dev_addr,
-        .scl_speed_hz = scl_speed_hz,
+        .device_address = LCD_ADDR,
+        .scl_speed_hz = LCD_SCL_SPEED_HZ,
     };
     
     // Install LCD/I2C Expander Device on Master Bus
-    ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &dev_cfg, dev_handle));
+    ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &dev_cfg, &lcd_handle));
 
     /* -- LCD -- */
 
